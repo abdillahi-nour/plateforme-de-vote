@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+  <title>Vote de Confiance - Vérification</title>
+  
+  <!-- Fonts and icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <style>
+    :root {
+      --primary-color: #9b5de5;
+      --secondary-color: #6c9eff;
+      --primary-dark: #7e4bc2;
+      --background-color: #f5f7fa;
+      --text-color: #333;
+      --text-light: #777;
+      --border-color: #e0e0e0;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--background-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .verification-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 2.5rem;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      border: none;
+    }
+
+    .verification-card h3 {
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .verification-card .subtext {
+      color: var(--text-light);
+      margin-bottom: 2rem;
+      display: block;
+    }
+
+    .otp-input-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 2rem;
+    }
+
+    .otp-input {
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      font-size: 1.2rem;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+
+    .otp-input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(155, 93, 229, 0.2);
+      outline: none;
+    }
+
+    .verify-btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 100%;
+      font-size: 1rem;
+    }
+
+    .verify-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .resend-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 1.5rem;
+      display: inline-block;
+    }
+
+    .resend-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="verification-card">
+    <i class="fas fa-shield-alt" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+    <h3>Vérification de sécurité</h3>
+    <span class="subtext">Nous avons envoyé un code de vérification à votre adresse email</span>
+    
+    <form method="post" action="/otpverify" class="text-center">
+      <div class="otp-input-group">
+        <input type="text" name="otp" class="otp-input" maxlength="4" pattern="\d{4}" required id="otpField">
+      </div>
+      
+      <button type="submit" class="verify-btn">
+        <i class="fas fa-check-circle me-2"></i> Vérifier le code
+      </button>
+      
+      <div class="mt-4">
+        <a href="#" class="resend-link">
+          <i class="fas fa-redo me-2"></i> Renvoyer le code
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  
+  <script>
+    // Vider le champ et le focus au chargement
+    document.addEventListener('DOMContentLoaded', function() {
+      const otpField = document.getElementById('otpField');
+      otpField.value = '';
+      otpField.focus();
+      
+      // Auto move to next input (si vous utilisez plusieurs champs OTP)
+      otpField.addEventListener('input', function(e) {
+        if(this.value.length === this.maxLength) {
+          // Si vous avez plusieurs champs OTP, vous pouvez passer au suivant ici
+          // this.nextElementSibling?.focus();
+        }
+      });
+    });
+
+    // Empêcher le remplissage automatique par le navigateur
+    window.onload = function() {
+      document.getElementById('otpField').autocomplete = 'off';
+    };
+  </script>
+</body>
+
+</html>

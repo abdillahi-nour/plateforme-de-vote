@@ -1,0 +1,119 @@
+:root {
+    --primary-color: #6a11cb;
+    --secondary-color: #2575fc;
+    --accent-color: #ff5f6d;
+    --btn-home-color: #4e73df; /* Couleur différente pour le bouton Retour à l'Accueil */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+}
+
+.auth-container {
+    max-width: 900px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.auth-illustration {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-form {
+    background: white;
+    padding: 3rem;
+    border-radius: 15px;
+}
+
+.logo {
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.btn-connect {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    border: none;
+    padding: 12px 30px;
+    font-weight: 600;
+    color: white;
+    border-radius: 50px;
+    transition: all 0.3s;
+}
+
+.btn-connect:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(106, 17, 203, 0.2);
+}
+
+.btn-home {
+    background: var(--btn-home-color); /* Couleur spécifique pour le bouton retour à l'accueil */
+    border: none;
+    padding: 12px 30px;
+    font-weight: 600;
+    color: white;
+    border-radius: 50px;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-home:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(78, 115, 223, 0.2);
+}
+
+.form-control {
+    border-radius: 50px;
+    padding: 12px 20px;
+    border: 1px solid #e0e0e0;
+    position: relative;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(106, 17, 203, 0.25);
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.input-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6a11cb;
+    cursor: pointer;
+}
+
+.auth-illustration img {
+    width: 180px;
+    margin-bottom: 1.5rem;
+}
+
+.auth-illustration h2, .auth-illustration p {
+    font-size: 1.2rem;
+}
+
+@media (max-width: 767px) {
+    .auth-container {
+        padding: 1rem;
+    }
+    .auth-illustration h2, .auth-illustration p {
+        font-size: 1rem;
+    }
+}

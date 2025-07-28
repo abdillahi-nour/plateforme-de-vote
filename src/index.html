@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accueil - Plateforme de Vote</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #6a11cb;
+      --secondary-color: #2575fc;
+    }
+    body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    .main-container {
+      background: #fff;
+      color: #333;
+      border-radius: 15px;
+      padding: 3rem;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      gap: 2rem;
+    }
+    .left-section {
+      flex: 1;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: #fff;
+      border-radius: 10px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .left-section img {
+      max-width: 80%;
+      height: auto;
+      margin-bottom: 1.5rem;
+    }
+    .left-section h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .left-section p {
+      font-size: 1rem;
+    }
+    .right-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .right-section h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary-color);
+    }
+    .btn-option {
+      padding: 1rem;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+    .btn-option:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(106, 17, 203, 0.2);
+    }
+    .btn-login {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: #fff;
+    }
+    .btn-register {
+      background: linear-gradient(to right, #43cea2, #185a9d);
+      color: #fff;
+    }
+    .btn-admin {
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <!-- Section gauche avec illustration -->
+    <div class="left-section">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Vote illustration"/>
+      <h1>Vote sécurisé et moderne</h1>
+      <p>Exprimez votre opinion en toute confiance.</p>
+    </div>
+
+    <!-- Section droite avec les boutons -->
+    <div class="right-section">
+      <h2>Accédez à votre espace</h2>
+      <a href="/login" class="btn btn-option btn-login w-100">
+        <i class="fas fa-sign-in-alt me-2"></i> Connexion
+      </a>
+      <a href="/register" class="btn btn-option btn-register w-100">
+        <i class="fas fa-user-plus me-2"></i> Inscription
+      </a>
+      <a href="/adlogin" class="btn btn-option btn-admin w-100">
+        <i class="fas fa-user-shield me-2"></i> Connexion Admin
+      </a>
+    </div>
+
+  </div>
+</body>
+</html>

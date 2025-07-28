@@ -1,0 +1,6 @@
+# Ignorer le fichier de configuration des variables d’environnement
+.env
+
+# Ignorer les modules Node.js
+node_modules/
+

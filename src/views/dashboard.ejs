@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Espace Électeur</title>
+
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- CSS Styles -->
+  <style>
+    :root {
+      --primary-color: #9b5de5;
+      --secondary-color: #6c9eff;
+      --primary-dark: #7e4bc2;
+      --background-color: #f5f7fa;
+      --text-color: #333;
+      --text-light: #777;
+      --border-color: #e0e0e0;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: var(--background-color);
+      color: var(--text-color);
+    }
+
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 260px;
+      background: white;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+      height: 100vh;
+      position: fixed;
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem;
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+    }
+
+    .sidebar-header h3 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+
+    .sidebar-menu {
+      padding: 1rem 0;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 1.5rem;
+      color: var(--text-light);
+      text-decoration: none;
+      margin: 0.25rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+
+    .nav-link:hover {
+      background-color: rgba(155, 93, 229, 0.1);
+      color: var(--primary-color);
+    }
+
+    .nav-link.active {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .nav-link i {
+      margin-right: 12px;
+      font-size: 1.25rem;
+    }
+
+    .logout-link {
+      border-top: 1px solid var(--border-color);
+      margin-top: 1rem;
+      padding-top: 1rem;
+      color: #dc3545 !important;
+    }
+
+    .logout-link:hover {
+      background-color: rgba(220, 53, 69, 0.1) !important;
+    }
+
+    .main-content {
+      margin-left: 260px;
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      border: none;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 1.25rem 1.5rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: var(--text-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(155, 93, 229, 0.25);
+    }
+
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="position-fixed top-0 start-50 translate-middle-x p-3 w-100" style="z-index: 9999; max-width: 600px;">
+    <div id="toastContainer" class="toast-container w-100"></div>
+  </div>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h3><i class="fas fa-vote-yea"></i> Espace Électeur</h3>
+        <small>Gestion des électeurs</small>
+      </div>
+      <div class="sidebar-menu">
+        <a href="/userInfo" class="nav-link">
+          <i class="fas fa-info-circle"></i> À propos du vote
+        </a>
+        <a href="/form" class="nav-link">
+          <i class="fas fa-user-check"></i> S'inscrire au vote
+        </a>
+        <a href="/dashboard" class="nav-link active">
+          <i class="fas fa-vote-yea"></i> Participer au vote
+        </a>
+        <a href="/result" class="nav-link">
+          <i class="fas fa-poll"></i> Voir les résultats
+        </a>
+        <a href="/logout" class="nav-link logout-link">
+          <i class="fas fa-sign-out-alt"></i> Déconnexion
+        </a>
+      </div>
+    </div>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="card-body">
+    <!-- Sélecteur d'élection -->
+    <div class="mb-4">
+      <label for="electionSelectCand" class="form-label fw-semibold">
+        Sélectionnez une élection
+      </label>
+      <select
+        id="electionSelectCand"
+        name="electionSelectCand"
+        class="form-select form-select-lg"
+        required
+        aria-label="Sélection de l’élection pour afficher les candidats">
+        <option value="" disabled selected>── Choisissez une élection ──</option>
+        <!-- Options dynamiques injectées par JavaScript -->
+      </select>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Zone affichant la phase de l’élection -->
+    <div id="phase" class="mb-4 text-primary fw-semibold"></div>
+
+    <!-- Conteneur des cartes de candidats : 1 à 4 par ligne -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="test">
+      <!-- Cartes des candidats injectées dynamiquement ici -->
+    </div>
+  </div>
+</div>
+
+
+
+
+  <!-- Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/app.js"></script>
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="../assets/js/plugins/moment.min.js"></script>
+  <script src="../assets/js/plugins/jquery.validate.min.js"></script>
+  <script src="../assets/js/plugins/bootstrap-tagsinput.js"></script>
+  <script src="../assets/js/plugins/jasny-bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/jquery-jvectormap.js"></script>
+  <script src="../assets/js/plugins/nouislider.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+  <script src="../assets/js/plugins/arrive.min.js"></script>
+  <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+  <script src="../assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Initialisation du tableau de bord
+      md.initDashboardPageCharts();
+
+      // Gestion des plugins fixes
+      $().ready(function() {
+        $sidebar = $('.sidebar');
+        $sidebar_img_container = $sidebar.find('.sidebar-background');
+        $full_page = $('.full-page');
+        $sidebar_responsive = $('body > .navbar-collapse');
+        window_width = $(window).width();
+
+        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+        if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
+          if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
+            $('.fixed-plugin .dropdown').addClass('open');
+          }
+        }
+
+        $('.fixed-plugin a').click(function(event) {
+          if ($(this).hasClass('switch-trigger')) {
+            if (event.stopPropagation) {
+              event.stopPropagation();
+            } else if (window.event) {
+              window.event.cancelBubble = true;
+            }
+          }
+        });
+
+        // Gestion des couleurs
+        $('.fixed-plugin .active-color span').click(function() {
+          $full_page_background = $('.full-page-background');
+          $(this).siblings().removeClass('active');
+          $(this).addClass('active');
+          var new_color = $(this).data('color');
+
+          if ($sidebar.length != 0) $sidebar.attr('data-color', new_color);
+          if ($full_page.length != 0) $full_page.attr('filter-color', new_color);
+          if ($sidebar_responsive.length != 0) $sidebar_responsive.attr('data-color', new_color);
+        });
+
+        $('.fixed-plugin .background-color .badge').click(function() {
+          $(this).siblings().removeClass('active');
+          $(this).addClass('active');
+          var new_color = $(this).data('background-color');
+          if ($sidebar.length != 0) $sidebar.attr('data-background-color', new_color);
+        });
+
+        // Gestion des images
+        $('.fixed-plugin .img-holder').click(function() {
+          $full_page_background = $('.full-page-background');
+          $(this).parent('li').siblings().removeClass('active');
+          $(this).parent('li').addClass('active');
+          var new_image = $(this).find("img").attr('src');
+
+          if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+            $sidebar_img_container.fadeOut('fast', function() {
+              $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+              $sidebar_img_container.fadeIn('fast');
+            });
+          }
+
+          if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
+            $full_page_background.fadeOut('fast', function() {
+              $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+              $full_page_background.fadeIn('fast');
+            });
+          }
+
+          if ($('.switch-sidebar-image input:checked').length == 0) {
+            var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
+            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
+            $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+            $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+          }
+
+          if ($sidebar_responsive.length != 0) {
+            $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
+          }
+        });
+
+        // Gestion des switchs
+        $('.switch-sidebar-image input').change(function() {
+          $full_page_background = $('.full-page-background');
+          $input = $(this);
+
+          if ($input.is(':checked')) {
+            if ($sidebar_img_container.length != 0) {
+              $sidebar_img_container.fadeIn('fast');
+              $sidebar.attr('data-image', '#');
+            }
+            if ($full_page_background.length != 0) {
+              $full_page_background.fadeIn('fast');
+              $full_page.attr('data-image', '#');
+            }
+          } else {
+            if ($sidebar_img_container.length != 0) {
+              $sidebar.removeAttr('data-image');
+              $sidebar_img_container.fadeOut('fast');
+            }
+            if ($full_page_background.length != 0) {
+              $full_page.removeAttr('data-image', '#');
+              $full_page_background.fadeOut('fast');
+            }
+          }
+        });
+
+        $('.switch-sidebar-mini input').change(function() {
+          $body = $('body');
+          $input = $(this);
+
+          if (md.misc.sidebar_mini_active == true) {
+            $('body').removeClass('sidebar-mini');
+            md.misc.sidebar_mini_active = false;
+            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+          } else {
+            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
+            setTimeout(function() {
+              $('body').addClass('sidebar-mini');
+              md.misc.sidebar_mini_active = true;
+            }, 300);
+          }
+
+          // Simulation du redimensionnement de la fenêtre
+          var simulateWindowResize = setInterval(function() {
+            window.dispatchEvent(new Event('resize'));
+          }, 180);
+
+          setTimeout(function() {
+            clearInterval(simulateWindowResize);
+          }, 1000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Candidat</title>
+
+    <!-- Polices et icônes -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        /* Styles ici (mêmes que fournis précédemment, inchangés pour ne pas surcharger) */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+        .dashboard-container { display: flex; min-height: 100vh; }
+        .sidebar { width: 260px; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.05); position: fixed; height: 100vh; }
+        .sidebar-header { padding: 1.5rem; background: linear-gradient(135deg, #9b5de5, #6c9eff); text-align: center; }
+        .sidebar-header h3 { color: white; font-size: 1.4rem; margin: 0; }
+        .sidebar-header small { color: rgba(255,255,255,0.8); }
+        .sidebar-menu a { display: flex; align-items: center; padding: 0.8rem 1.5rem; color: #777; text-decoration: none; transition: 0.3s; }
+        .sidebar-menu a:hover { background: rgba(155, 93, 229, 0.1); color: #9b5de5; }
+        .sidebar-menu a.active { background: #9b5de5; color: white; }
+        .main-content { margin-left: 260px; flex: 1; padding: 2rem; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+        .card-header { background: linear-gradient(135deg, #9b5de5, #6c9eff); color: white; padding: 1.25rem; font-size: 1.25rem; font-weight: 600; }
+        .card-body { padding: 2rem; }
+        .guide-section { margin-bottom: 2rem; }
+        .guide-section h5 { color: #7e4bc2; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-vote-yea"></i> Espace Candidat</h3>
+            <small>Gestion des candidats</small>
+        </div>
+        <div class="sidebar-menu">
+            <a href="/userInfo" class="nav-link active"><i class="fas fa-info-circle"></i> À propos du vote</a>
+            <a href="/form" class="nav-link"><i class="fas fa-user-check"></i> Soumettre candidature</a>
+            <a href="/dashboard" class="nav-link"><i class="fas fa-hourglass-half"></i> Suivre les phases</a>
+            <a href="/result" class="nav-link"><i class="fas fa-poll"></i> Résultats</a>
+            <a href="/logout" class="nav-link"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="card">
+            <div class="card-header">
+                <i class="material-icons">menu_book</i>
+                <h4 class="mb-0 ms-2">Guide du Candidat</h4>
+            </div>
+            <div class="card-body">
+                <h4 class="mb-4">Bienvenue dans l'espace Candidat</h4>
+                <p class="lead">Cet espace vous permet de soumettre votre candidature, suivre le déroulement des phases de vote et consulter les résultats de manière transparente grâce à la blockchain.</p>
+
+                <div class="guide-section">
+                    <h5><i class="fas fa-file-signature"></i> Soumettre votre candidature</h5>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item">Remplissez le formulaire avec vos informations : nom, âge, programme, photo</li>
+                        <li class="list-group-item">Une fois validée, votre candidature apparaîtra publiquement</li>
+                    </ul>
+                </div>
+
+                <div class="guide-section">
+                    <h5><i class="fas fa-hourglass-half"></i> Suivre l’évolution de la phase électorale</h5>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item">Vérifiez si la période de vote est ouverte</li>
+                        <li class="list-group-item">Suivez le nombre de votes en temps réel</li>
+                        <li class="list-group-item">Consultez votre position dans le classement</li>
+                    </ul>
+                </div>
+
+                <div class="guide-section">
+                    <h5><i class="fas fa-chart-bar"></i> Résultats et statistiques</h5>
+                    <p>Consultez votre score final, les statistiques globales, et l’historique des votes vérifiables publiquement.</p>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+</body>
+</html>

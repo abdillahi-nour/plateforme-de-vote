@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Candidat</title>
+
+  <!-- Fonts et icônes -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary-color: #9b5de5;
+      --secondary-color: #6c9eff;
+      --background-color: #f5f7fa;
+      --text-color: #333;
+      --text-light: #777;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: var(--background-color);
+      color: var(--text-color);
+    }
+
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 260px;
+      background: white;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+      position: fixed;
+      height: 100vh;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      text-align: center;
+    }
+
+    .sidebar-header h3 {
+      color: white;
+      margin: 0;
+      font-size: 1.4rem;
+    }
+
+    .sidebar-header small {
+      color: rgba(255,255,255,0.8);
+    }
+
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 1.5rem;
+      color: #777;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .sidebar-menu a:hover,
+    .sidebar-menu a.active {
+      background: rgba(155, 93, 229, 0.1);
+      color: var(--primary-color);
+    }
+
+    .main-content {
+      margin-left: 260px;
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom: 2rem;
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 1rem 1.5rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .card-body {
+      padding: 2rem;
+    }
+
+    .tab-section { display: none; }
+    .tab-section.active { display: block; animation: fadeIn 0.4s; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+    <style>
+        /* Styles ici (mêmes que fournis précédemment, inchangés pour ne pas surcharger) */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+        .dashboard-container { display: flex; min-height: 100vh; }
+        .sidebar { width: 260px; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.05); position: fixed; height: 100vh; }
+        .sidebar-header { padding: 1.5rem; background: linear-gradient(135deg, #9b5de5, #6c9eff); text-align: center; }
+        .sidebar-header h3 { color: white; font-size: 1.4rem; margin: 0; }
+        .sidebar-header small { color: rgba(255,255,255,0.8); }
+        .sidebar-menu a { display: flex; align-items: center; padding: 0.8rem 1.5rem; color: #777; text-decoration: none; transition: 0.3s; }
+        .sidebar-menu a:hover { background: rgba(155, 93, 229, 0.1); color: #9b5de5; }
+        .sidebar-menu a.active { background: #9b5de5; color: white; }
+        .main-content { margin-left: 260px; flex: 1; padding: 2rem; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+        .card-header { background: linear-gradient(135deg, #9b5de5, #6c9eff); color: white; padding: 1.25rem; font-size: 1.25rem; font-weight: 600; }
+        .card-body { padding: 2rem; }
+        .guide-section { margin-bottom: 2rem; }
+        .guide-section h5 { color: #7e4bc2; margin-bottom: 1rem; }
+    </style>
+</head>
+
+<body>
+  <div class="dashboard-container">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h3><i class="fas fa-user-tie"></i> Candidat</h3>
+        <small>Espace personnel</small>
+      </div>
+      <div class="sidebar-menu">
+        <a href="#" class="nav-link active" onclick="switchTab(event, 'guide')"><i class="fas fa-book"></i> Guide</a>
+        <a href="#" class="nav-link" onclick="switchTab(event, 'formulaire')"><i class="fas fa-edit"></i> Candidature</a>
+        <a href="#" class="nav-link" onclick="switchTab(event, 'phase')"><i class="fas fa-clock"></i> Phase</a>
+        <a href="#" class="nav-link" onclick="switchTab(event, 'resultats')"><i class="fas fa-poll"></i> Résultats</a>
+        <a href="#" class="nav-link" onclick="switchTab(event, 'suivi')"><i class="fas fa-tasks"></i> Suivi</a>
+      </div>
+    </div>
+
+    <div class="main-content">
+        <!-- Carte Profil Candidat -->
+<div class="card mb-4">
+    <div class="card-header d-flex align-items-center">
+      <i class="fas fa-id-card me-2"></i> Profil du Candidat
+    </div>
+    <div class="card-body d-flex align-items-center">
+      <div>
+        <h5 class="mb-1">Moussa abdillahi Ali</h5>
+        <p class="mb-1">Âge : 44 ans</p>
+        <p class="mb-0">Adresse Ethereum : <code>0x29A80f870900BabD647269477001Cc86F8De0B90</code></p>
+      </div>
+    </div>
+  </div>
+  
+      <!-- Onglet Guide -->
+      <div id="guide" class="tab-section active">
+       
+        <div class="card">
+            <div class="card-header">
+                <i class="material-icons"></i>
+                <h4 class="mb-0 ms-2">Guide du Candidat</h4>
+            </div>
+            <div class="card-body">
+                <h4 class="mb-4">Bienvenue dans l'espace Candidat</h4>
+                <p class="lead">Cet espace vous permet de soumettre votre candidature, suivre le déroulement des phases de vote et consulter les résultats de manière transparente grâce à la blockchain.</p>
+
+                <div class="guide-section">
+                    <h5><i class="fas fa-file-signature"></i> Soumettre votre candidature</h5>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item">Remplissez le formulaire avec vos informations : nom, âge, programme, photo</li>
+                        <li class="list-group-item">Une fois validée, votre candidature apparaîtra publiquement</li>
+                    </ul>
+                </div>
+
+                <div class="guide-section">
+                    <h5><i class="fas fa-hourglass-half"></i> Suivre l’évolution de la phase électorale</h5>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item">Vérifiez si la période de vote est ouverte</li>
+                        <li class="list-group-item">Suivez le nombre de votes en temps réel</li>
+                        <li class="list-group-item">Consultez votre position dans le classement</li>
+                    </ul>
+                </div>
+
+                <div class="guide-section">
+                    <h5><i class="fas fa-chart-bar"></i> Résultats et statistiques</h5>
+                    <p>Consultez votre score final, les statistiques globales, et l’historique des votes vérifiables publiquement.</p>
+                </div>
+            </div>
+
+            
+        </div>
+      </div>
+
+      <!-- Onglet Formulaire -->
+      <div id="formulaire" class="tab-section">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-user-plus me-2"></i>Formulaire de candidature</div>
+          <div class="card-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Nom complet</label>
+                <input type="text" class="form-control" placeholder="Nom complet">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Âge</label>
+                <input type="number" class="form-control" placeholder="Âge">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" rows="3" placeholder="Votre programme..."></textarea>
+              </div>
+              <button class="btn btn-primary" disabled>Soumettre</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Onglet Phase -->
+      <div id="phase" class="tab-section">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-clock me-2"></i>Phase actuelle</div>
+          <div class="card-body">
+            <div class="alert alert-info">Actuellement : <strong>Phase 2 - Vote en cours</strong></div>
+            <div class="progress" style="height: 25px;">
+              <div class="progress-bar bg-warning text-dark" style="width: 66%;">Phase 2 / 3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Onglet Résultats -->
+      <div id="resultats" class="tab-section">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-chart-bar me-2"></i>Résultats</div>
+          <div class="card-body">
+            <table class="table table-bordered">
+              <thead class="table-secondary">
+                <tr>
+                  <th>Nom</th>
+                  <th>Votes</th>
+                  <th>Classement</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Abdillahi Nour Hassan </td><td>22</td><td>1ʳᵉ</td></tr>
+                <tr><td>Fatima Said Ahmed</td><td>17</td><td>2ᵉ</td></tr>
+                <tr><td>Mohamed Ahmed yassin</td><td>8</td><td>3ᵉ</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Onglet Suivi -->
+      <div id="suivi" class="tab-section">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-tasks me-2"></i>Suivi de dossier</div>
+          <div class="card-body">
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Étape 1 : Candidature soumise
+                <span class="badge bg-success"><i class="fas fa-check"></i></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Étape 2 : Vérification des informations
+                <span class="badge bg-success"><i class="fas fa-check"></i></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Étape 3 : Validation administrateur
+                <span class="badge bg-warning text-dark">En attente</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Étape 4 : Publication officielle
+                <span class="badge bg-secondary">À venir</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function switchTab(event, sectionId) {
+      document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+  </script>
+</body>
+</html>

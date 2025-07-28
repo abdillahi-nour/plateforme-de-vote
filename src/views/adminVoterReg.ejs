@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestion des Électeurs - Admin</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #9b5de5;
+      --secondary-color: #6c9eff;
+      --primary-dark: #7e4bc2;
+      --background-color: #f5f7fa;
+      --text-color: #333;
+      --text-light: #777;
+      --border-color: #e0e0e0;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --input-focus-color: #9b5de5;
+      --success-color: #28a745;
+      --info-color: #17a2b8;
+      --warning-color: #ffc107;
+    }
+  
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+  
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+  
+    /* Sidebar Styles */
+    .sidebar {
+      width: 260px;
+      background: white;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+      position: fixed;
+      height: 100vh;
+      z-index: 100;
+    }
+  
+    .sidebar-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+  
+    .sidebar-header h3 {
+      color: white;
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+  
+    .sidebar-header small {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.85rem;
+    }
+  
+    .sidebar-menu {
+      padding: 1rem 0;
+    }
+  
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 1.5rem;
+      color: var(--text-light);
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s;
+      margin: 0.25rem 1rem;
+      border-radius: 6px;
+    }
+  
+    .nav-link:hover {
+      background-color: rgba(155, 93, 229, 0.1);
+      color: var(--primary-color);
+    }
+  
+    .nav-link.active {
+      background-color: var(--primary-color);
+      color: white;
+      box-shadow: 0 4px 8px rgba(155, 93, 229, 0.2);
+    }
+  
+    .nav-link i {
+      margin-right: 12px;
+      font-size: 1.25rem;
+      width: 24px;
+      text-align: center;
+    }
+  
+    .logout-link {
+      margin-top: 1rem;
+      border-top: 1px solid var(--border-color);
+      padding-top: 1rem;
+      color: #dc3545 !important;
+    }
+  
+    .logout-link:hover {
+      background-color: rgba(220, 53, 69, 0.1) !important;
+    }
+  
+    /* Main Content Styles */
+    .main-content {
+      margin-left: 260px;
+      flex: 1;
+      padding: 2rem;
+    }
+  
+    /* Card Styles */
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 2rem;
+      border: none;
+      overflow: hidden;
+    }
+  
+    .card-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 1.25rem 1.5rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+  
+    .card-header i {
+      margin-right: 10px;
+    }
+  
+    .card-body {
+      padding: 2rem;
+    }
+  
+    /* Button Styles */
+    .btn {
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .btn i {
+      margin-right: 8px;
+    }
+  
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+  
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(155, 93, 229, 0.3);
+    }
+  
+    .btn-lg {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+    }
+    .summary-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #f0f7ff;
+  color: #3a86ff;
+}
+
+.summary-label {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.summary-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* Animation discrète */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.summary-item {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.summary-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+/* Résumé : fond léger, bordure arrondie */
+#electionSummary {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+/* Titre dans les cards */
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+/* Hover sur les lignes du tableau */
+#electeursTable tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="position-fixed top-0 start-50 translate-middle-x p-3 w-100" style="z-index: 9999; max-width: 600px;">
+    <div id="toastContainer" class="toast-container w-100"></div>
+  </div>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h3><i class="fas fa-user-shield"></i> Abdillahi Nour</h3>
+        <small>Admin</small>
+      </div>
+      <div class="sidebar-menu">
+        <a href="/adminCreateElection" class="nav-link">
+          <i class="fas fa-user-shield"></i> 
+          <span>Créer une élection</span>
+        </a>
+        <a href="/adminDetailVote" class="nav-link">
+          <i class="fa fa-info-circle"></i>
+          <span>Les élections</span>
+        </a>
+        <a href="/candidateDetails" class="nav-link">
+          <i class="fa fa-info-circle"></i>
+          <span>Liste des Candidats</span>
+        </a>
+        <a href="/table_view" class="nav-link active">
+          <i class="fas fa-users"></i>
+          <span>Gestion d'électeurs</span>
+        </a>
+        <a href="/changePhase" class="nav-link">
+          <i class="fa fa-poll-h"></i>
+          <span>Contrôle du Vote</span>
+        </a>
+        <a href="/logout" class="nav-link logout-link">
+          <i class="fa fa-sign-out-alt"></i>
+          <span>Déconnexion</span>
+        </a>
+      </div>
+    </div>
+
+<!-- Main Content -->
+<div class="main-content">
+  <!-- Toasts Bootstrap (fixed) -->
+  <div class="position-fixed top-0 start-50 translate-middle-x p-3 w-100" 
+       style="z-index: 9999; max-width: 600px;">
+    <div id="toastContainer" class="toast-container w-100"></div>
+  </div>
+
+  <div class="container-fluid">
+    <!-- Page Header -->
+    <div class="page-header mb-4">
+      <h1 class="mb-2">
+        <i class="fas fa-users me-2"></i> Registre des Électeurs
+      </h1>
+      <p class="text-muted mb-0">
+        Gérez l'ensemble des électeurs autorisés à participer au vote
+      </p>
+    </div>
+
+    <!-- 1) Formulaire d'inscription -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-white border-bottom">
+        <h5 class="mb-0">
+          <i class="fas fa-user-plus me-2"></i> Inscrire un Nouvel Électeur
+        </h5>
+      </div>
+      <div class="card-body">
+        <form id="formInscriptionElecteur" onsubmit="App.inscrireElecteur(); return false;">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="electionSelect" class="form-label">Élection</label>
+              <select id="electionSelect" class="form-select" required>
+                <option disabled selected value="">── Choisir une élection ──</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="electeurAddress" class="form-label">Adresse Ethereum</label>
+              <input
+                type="text"
+                id="electeurAddress"
+                class="form-control"
+                placeholder="0x..."
+                required
+              />
+            </div>
+            <div class="col-12 text-end">
+              <button type="submit" class="btn btn-primary px-4">
+                <i class="fas fa-user-plus me-2"></i> Inscrire l'électeur
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 2) Liste des électeurs + résumé -->
+    <div class="card shadow-sm">
+      <div class="card-header bg-white border-bottom">
+        <h5 class="mb-0">
+          <i class="fas fa-list me-2 "></i> Liste des Électeurs
+        </h5>
+      </div>
+      <div class="card-body">
+        <!-- résumé -->
+        <div id="electionSummary" class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 p-3 bg-light rounded">
+          
+          <!-- Statut du vote -->
+          <div class="d-flex align-items-center mb-3 mb-md-0">
+            <i class="fas fa-vote-yea fa-2x  me-3"></i>
+            <div>
+              <div class="text-muted small">Statut du vote</div>
+              <div id="voteState" class="fs-5 fw-semibold">–</div>
+            </div>
+          </div>
+      
+          <!-- Nombre de candidats -->
+          <div class="d-flex align-items-center">
+            <i class="fas fa-user-friends fa-2x  me-3"></i>
+            <div>
+              <div class="text-muted small">Candidats</div>
+              <div id="candidateCount" class="fs-5 fw-semibold">0</div>
+            </div>
+          </div>
+      
+        </div>
+      
+        <!-- tableau -->
+        <div class="table-responsive">
+          <table id="electeursTable" class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th style="width:10%;">#</th>
+                <th>Adresse du compte</th>
+                <th style="width:15%;">Statut</th>
+              </tr>
+            </thead>
+            <tbody id="electeursTbody">
+              <!-- rempli dynamiquement -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/app.js"></script>
+
+
+  
+</body>
+</html>

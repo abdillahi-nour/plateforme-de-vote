@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace d"lecteur</title>
+    
+    <!-- Polices et icônes -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700&display=swap" rel="stylesheet">
+  <!-- Fonts and icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+    :root {
+      --primary-color: #9b5de5;
+      --secondary-color: #6c9eff;
+      --primary-dark: #7e4bc2;
+      --background-color: #f5f7fa;
+      --text-color: #333;
+      --text-light: #777;
+      --border-color: #e0e0e0;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --input-focus-color: #9b5de5;
+      --success-color: #28a745;
+      --info-color: #17a2b8;
+      --warning-color: #ffc107;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: var(--background-color);
+      color: var(--text-color);
+    }
+
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: white;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+      height: 100vh;
+      position: fixed;
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .sidebar-header h3 {
+      color: white;
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+
+    .sidebar-header small {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .sidebar-menu {
+      padding: 1rem 0;
+    }
+
+    .nav-menu {
+      list-style: none;
+      padding: 1rem 0;
+      margin: 0;
+    }
+
+    .nav-item {
+      margin: 0.25rem 1rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 1.5rem;
+      color: var(--text-light);
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      background-color: rgba(155, 93, 229, 0.1);
+      color: var(--primary-color);
+    }
+
+    .nav-link.active {
+      background-color: var(--primary-color);
+      color: white;
+      box-shadow: 0 4px 8px rgba(155, 93, 229, 0.2);
+    }
+
+    .nav-link i {
+      margin-right: 12px;
+      font-size: 1.25rem;
+      width: 24px;
+      text-align: center;
+    }
+
+    .phase-badge {
+      background-color: var(--warning-color);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      margin-left: auto;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 280px;
+      flex: 1;
+      padding: 2rem;
+      transition: all 0.3s;
+    }
+
+    /* Card Styles */
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      border: none;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 1.25rem 1.5rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+
+    .card-header i {
+      margin-right: 10px;
+    }
+
+    .card-body {
+      padding: 2rem;
+    }
+
+    .guide-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .guide-section h5 {
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .phase-card {
+      padding: 1.25rem;
+      border-radius: 8px;
+      margin-bottom: 1.25rem;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .phase-card h6 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Menu Toggle */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1000;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      
+      .sidebar.active {
+        transform: translateX(0);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .menu-toggle {
+        display: block;
+      }
+    }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+     
+        
+          <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h3><i class="fas fa-vote-yea"></i> Espace électeur</h3>
+        
+          <small>Gestion des électeurs</small>
+        </div>
+        
+        <div class="sidebar-menu">
+          <a href="/userInfo" class="nav-link active">
+          <i class="fas fa-info-circle"></i>
+          <span> À propos du vote</span>
+          
+          </a>
+          <a href="/form" class="nav-link ">
+            <i class="fas fa-user-check"></i>
+            <span>S'inscrire au vote</span>
+          </a>
+          <a href="/dashboard" class="nav-link">
+            <i class="fas fa-vote-yea"></i>
+            <span>Participer au vote</span>
+          </a>
+          <a href="/result" class="nav-link">
+            <i class="fas fa-poll"></i>
+            <span>Voir les résultats</span>
+          </a>
+          <a href="/logout" class="nav-link logout-link">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Déconnexion</span>
+          </a>
+        </div>
+      </div>
+        
+            <!-- Main Content -->
+    <div class="main-content">
+      <div class="card">
+          <div class="card-header">
+              <i class="material-icons">menu_book</i>
+              <h4 class="mb-0">Manuel d'Utilisateur</h4>
+          </div>
+          <div class="card-body">
+              <h4 class="mb-4">Bienvenue sur Vote de Confiance</h4>
+              <p class="lead">Vote de Confiance est une plateforme sécurisée qui vous permet de participer à des élections en ligne de manière transparente grâce à la technologie blockchain.</p>
+              
+              <div class="guide-section">
+                  <h5><i class="fas fa-user-plus"></i> Inscription des Électeurs</h5>
+                  <div class="alert alert-info">
+                      <i class="fas fa-info-circle me-2"></i>
+                      Disponible uniquement pendant la <strong>Phase 1</strong>
+                  </div>
+                  <ul class="list-group list-group-flush mb-4">
+                      <li class="list-group-item">
+                          <strong>Accès au formulaire</strong> : Cliquez sur l'onglet "Inscription" durant la Phase 1.
+                      </li>
+                      <li class="list-group-item">
+                          <strong>Conditions requises</strong> :
+                          <ul>
+                              <li>Âge minimum : 18 ans</li>
+                              <li>Document d'identité valide (CIN ou passeport)</li>
+                              <li>Adresse de portefeuille blockchain valide</li>
+                          </ul>
+                      </li>
+                      <li class="list-group-item">
+                          <strong>Étapes d’inscription</strong> :
+                          <ol>
+                              <li>Vérification de votre identité et de votre éligibilité</li>
+                              <li>Confirmation via un code OTP envoyé par email</li>
+                          </ol>
+                      </li>
+                  </ul>
+              </div>
+              
+              <div class="guide-section">
+                  <h5><i class="fas fa-vote-yea"></i> Comment Voter</h5>
+                  
+                  <div class="phase-card" style="border-left-color: var(--warning-color);">
+                      <h6>
+                          <span class="phase-badge">Phase 1</span>
+                          Inscription
+                      </h6>
+                      <p>Période réservée à l’enregistrement des électeurs. Aucune inscription ne sera possible après cette phase.</p>
+                  </div>
+                  
+                  <div class="phase-card" style="border-left-color: var(--primary-color);">
+                      <h6>
+                          <span class="phase-badge" style="background-color: var(--primary-color);">Phase 2</span>
+                          Vote
+                      </h6>
+                      <ul class="list-group list-group-flush">
+                          <li class="list-group-item">Consulter la liste des candidats disponibles</li>
+                          <li class="list-group-item">Choisir un seul candidat</li>
+                          <li class="list-group-item">Confirmer votre choix via une transaction blockchain</li>
+                      </ul>
+                      <div class="alert alert-warning mt-3">
+                          <i class="fas fa-exclamation-triangle me-2"></i>
+                          Une seule participation est autorisée par adresse de portefeuille.
+                      </div>
+                  </div>
+                  
+                  <div class="phase-card" style="border-left-color: var(--success-color);">
+                      <h6>
+                          <span class="phase-badge" style="background-color: var(--success-color);">Phase 3</span>
+                          Résultats
+                      </h6>
+                      <ul class="list-group list-group-flush">
+                          <li class="list-group-item">Classement mis à jour en temps réel</li>
+                          <li class="list-group-item">Statistiques détaillées pour chaque candidat</li>
+                          <li class="list-group-item">Historique public et vérifiable des votes</li>
+                      </ul>
+                  </div>
+              </div>
+              
+              <div class="guide-section">
+                  <h5><i class="fas fa-shield-alt"></i> Sécurité et Transparence</h5>
+                  <div class="alert alert-success">
+                      <i class="fas fa-lock me-2"></i>
+                      La blockchain garantit la sécurité, l'intégrité et l’anonymat de chaque vote.
+                  </div>
+                  <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          Horodatage de chaque vote pour une parfaite traçabilité
+                      </li>
+                      <li class="list-group-item">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          Aucune possibilité de falsification ou de double vote
+                      </li>
+                      <li class="list-group-item">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          Anonymat des votants, transparence des résultats
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Menu mobile
+            $('#menuToggle').click(function() {
+                $('#sidebar').toggleClass('active');
+            });
+            
+            // Highlight active nav item
+            $('.nav-item').click(function() {
+                $('.nav-item').removeClass('active');
+                $(this).addClass('active');
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            $(document).click(function(e) {
+                if ($(window).width() <= 992) {
+                    if (!$(e.target).closest('#sidebar, #menuToggle').length) {
+                        $('#sidebar').removeClass('active');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

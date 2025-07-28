@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard</title>
+
+  <!-- Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <style>
+    /* Variables et Styles personnalisés */
+    :root {
+      --primary-color: #9b5de5;
+      --secondary-color: #6c9eff;
+      --primary-dark: #7e4bc2;
+      --background-color: #f5f7fa;
+      --text-color: #333;
+      --text-light: #777;
+      --border-color: #e0e0e0;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --input-focus-color: #9b5de5;
+      --success-color: #28a745;
+      --info-color: #17a2b8;
+      --warning-color: #ffc107;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: var(--background-color);
+      color: var(--text-color);
+    }
+
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: white;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+      height: 100vh;
+      position: fixed;
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .sidebar-header h3 {
+      color: white;
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+
+    .sidebar-header small {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .sidebar-menu {
+      padding: 1rem 0;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 1.5rem;
+      color: var(--text-light);
+      font-weight: 500;
+      text-decoration: none;
+      margin: 0.25rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+
+    .nav-link:hover {
+      background-color: rgba(155, 93, 229, 0.1);
+      color: var(--primary-color);
+    }
+
+    .nav-link.active {
+      background-color: var(--primary-color);
+      color: white;
+      box-shadow: 0 4px 8px rgba(155, 93, 229, 0.2);
+    }
+
+    .nav-link i {
+      margin-right: 12px;
+      font-size: 1.25rem;
+    }
+
+    .logout-link {
+      margin-top: 1rem;
+      border-top: 1px solid var(--border-color);
+      padding-top: 1rem;
+      color: #dc3545 !important;
+    }
+
+    .logout-link:hover {
+      background-color: rgba(220, 53, 69, 0.1) !important;
+    }
+ /* Table Styles */
+ .table-responsive {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .table {
+      width: 100%;
+      margin-bottom: 1rem;
+      color: var(--text-color);
+      border-collapse: collapse;
+    }
+
+    .table thead th {
+      vertical-align: bottom;
+      border-bottom: 2px solid var(--border-color);
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: 600;
+      padding: 1rem;
+      text-align: left;
+    }
+
+    .table tbody tr {
+      transition: all 0.2s;
+    }
+
+    .table tbody tr:hover {
+      background-color: rgba(155, 93, 229, 0.05);
+    }
+
+    .table td, .table th {
+      padding: 0.75rem;
+      vertical-align: top;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 260px;
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      border: none;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 1.25rem 1.5rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .card-body {
+      padding: 2rem;
+    }
+
+    .btn {
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-container">
+   <!-- Sidebar -->
+   <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h3><i class="fas fa-user-shield"></i> Abdillahi Nour</h3>
+      <small>Admin</small>
+    </div>
+    <div class="sidebar-menu">
+      <a href="/adminCreateElection" class="nav-link ">
+        <i class="fas fa-user-shield"></i> 
+      <span>Créer une élection</span>
+      </a>
+  <a href="/adminDetailVote" class="nav-link active">
+    <i class="fa fa-info-circle"></i>
+    <span>Les elections </span>
+  </a>
+      <a href="/candidateDetails" class="nav-link ">
+        <i class="fa fa-info-circle"></i>
+        <span>Liste des Candidats</span>
+      </a>
+      <a href="/ajouterCandidat" class="nav-link">
+        <i class="fas fa-user-plus"></i>
+        <span>Nouveau Candidat</span>
+      </a>
+      <a href="/table_view" class="nav-link">
+        <i class="fas fa-users"></i>
+      
+        <span>Gestion d'électeurs</span>
+      </a>
+      <a href="/changePhase" class="nav-link" aria-label="Contrôle du Vote">
+        <i class="fa fa-poll-h"></i>
+        <span>Contrôle du Vote</span>
+      </a>
+      <a href="/logout" class="nav-link logout-link" aria-label="Déconnexion">
+        <i class="fa fa-sign-out-alt"></i>
+        <span>Déconnexion</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <nav class="top-navbar">
+      <p id="accountAddress" class="text-center text-muted small">Chargement des informations du compte...</p>
+    </nav>
+
+    <div class="content-area">
+      <div class="card shadow-sm border-0">
+        <!-- En-tête de la carte -->
+        <div class="card-header d-flex align-items-center" style="background-color: #9b5de5; color: white;">
+          <i class="fas fa-vote-yea fa-lg me-2"></i>
+          <span class="fw-semibold fs-5">🗳️ Élections enregistrées dans le système</span>
+        </div><hr>
+     
+
+        <!-- Corps de la carte -->
+        <div class="card-body">
+              <!-- 🔍 Champ de recherche personnalisé -->
+      <div class="mb-3">
+        <input type="text" id="searchElections" class="form-control" placeholder="Rechercher une élection...">
+      </div>
+        
+          <!-- Tableau des élections -->
+          <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle" id="tableElectionsEncours">
+              <thead class="table-dark">
+                <tr>
+                  <th> Matricule</th>
+                  <th> Titre de l'élection</th>
+                  <th> Nombre de candidats</th>
+                  <th> Statut actuel</th>
+                </tr>
+              </thead>
+              <tbody id="listeElections">
+                <!-- Rempli dynamiquement via JavaScript -->
+                <tr>
+                  <td colspan="4" class="text-center text-muted py-3">
+                    <i class="fas fa-spinner fa-spin me-2"></i> Chargement des élections en cours...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    
+  </div>
+  
+
+  <!-- JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    // Highlight active links
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function () {
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+
+</html>
