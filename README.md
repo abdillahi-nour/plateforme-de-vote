@@ -16,13 +16,6 @@ Il a été réalisé dans le cadre de mon projet de fin d'études.
 ### Inscription de l’électeur à une élection
 ![Inscription électeur à une élection](images/inscription_electeur_election.png)
 
-
-## 🛠️ Technologies utilisées
-
-- Frontend : HTML, CSS, Bootstrap, JavaScript
-- Backend : Node.js, Express.js, MySQL
-- Blockchain : Solidity, Ganache, Web3.js
-
 ## ⚙️ Fonctionnalités
 
 - Authentification (Admin, Électeur, Candidat)
